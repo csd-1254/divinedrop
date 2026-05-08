@@ -377,7 +377,7 @@ public class ItemRegistry {
     }
 
     private static long cellKey(int x, int z) {
-        return (((long) x) << 32) ^ (z & 0xffffffffL);
+        return (((long) x) << 32) | (z & 0xffffffffL);
     }
 
     private static final class ItemSignature {

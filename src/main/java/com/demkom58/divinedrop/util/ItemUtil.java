@@ -16,7 +16,7 @@ public final class ItemUtil {
     }
 
     public static boolean isStackEquivalent(ItemStack first, ItemStack second) {
-        return first.getType() == second.getType() && first.isSimilar(second);
+        return first.isSimilar(second);
     }
 
     public static int totalAmount(Map<Integer, ItemStack> stacks) {
