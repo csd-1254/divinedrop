@@ -79,7 +79,7 @@ public final class ConfigData {
         pickupOnShift = conf.getBoolean("pickup-items-on-sneak", false);
         ignoreNoPickup = conf.getBoolean("ignore-no-pickup-items", true);
         lang = conf.getString("lang", "en_CA");
-        maxStack = Math.max(1, conf.getInt("max-stack", 512));
+        maxStack = Math.max(0, conf.getInt("max-stack", 512));
         stackRadius = Math.max(0, conf.getInt("stack-radius", 6));
 
         final ConfigurationSection msg = getConfigurationSection(conf, "messages");

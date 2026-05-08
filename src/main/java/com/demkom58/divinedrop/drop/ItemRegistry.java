@@ -180,9 +180,9 @@ public class ItemRegistry {
         if (data.getMaxStack() <= 0)
             return true;
 
-        final Item keep = with.getTicksLived() >= removed.getTicksLived() ? with : removed;
-        final Item merge = keep == with ? removed : with;
-        mergeItems(keep, merge, Math.max(1, data.getMaxStack()));
+        final Item keep = with.getTicksLived() > removed.getTicksLived() ? with : removed;
+        final Item source = keep == with ? removed : with;
+        mergeItems(keep, source, Math.max(1, data.getMaxStack()));
         return false;
     }
 
@@ -291,21 +291,21 @@ public class ItemRegistry {
         return remaining;
     }
 
-    private int mergeItems(@NotNull final Item with, @NotNull final Item removed, final int maxStack) {
-        if (!with.isValid() || !removed.isValid() || with == removed)
+    private int mergeItems(@NotNull final Item with, @NotNull final Item source, final int maxStack) {
+        if (!with.isValid() || !source.isValid() || with == source)
             return 0;
 
         final ItemStack withStack = with.getItemStack();
-        final ItemStack removedStack = removed.getItemStack();
-        if (!ItemUtil.isStackEquivalent(withStack, removedStack))
+        final ItemStack sourceStack = source.getItemStack();
+        if (!ItemUtil.isStackEquivalent(withStack, sourceStack))
             return 0;
 
         final int amountWith = withStack.getAmount();
-        final int amountRemoved = removedStack.getAmount();
-        if (amountWith >= maxStack || amountRemoved <= 0)
+        final int amountSource = sourceStack.getAmount();
+        if (amountWith >= maxStack || amountSource <= 0)
             return 0;
 
-        final int merged = Math.min(maxStack - amountWith, amountRemoved);
+        final int merged = Math.min(maxStack - amountWith, amountSource);
         if (merged <= 0)
             return 0;
 
@@ -313,14 +313,14 @@ public class ItemRegistry {
         with.setItemStack(withStack);
         refreshItemAfterAmountChange(with);
 
-        final int left = amountRemoved - merged;
+        final int left = amountSource - merged;
         if (left <= 0) {
-            unregisterRemovedItem(removedStack, removed);
-            removed.remove();
+            unregisterRemovedItem(sourceStack, source);
+            source.remove();
         } else {
-            removedStack.setAmount(left);
-            removed.setItemStack(removedStack);
-            refreshItemAfterAmountChange(removed);
+            sourceStack.setAmount(left);
+            source.setItemStack(sourceStack);
+            refreshItemAfterAmountChange(source);
         }
 
         return merged;
