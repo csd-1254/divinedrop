@@ -3,6 +3,7 @@ package com.demkom58.divinedrop.drop;
 import com.demkom58.divinedrop.DivineDrop;
 import com.demkom58.divinedrop.config.ConfigData;
 import com.demkom58.divinedrop.config.DataContainer;
+import com.demkom58.divinedrop.config.StaticData;
 import com.demkom58.divinedrop.util.ItemUtil;
 import com.google.common.collect.MapMaker;
 import lombok.Getter;
@@ -362,7 +363,7 @@ public class ItemRegistry {
             return;
         }
 
-        final List<MetadataValue> metadataValues = item.getMetadata("metadata_countdown");
+        final List<MetadataValue> metadataValues = item.getMetadata(StaticData.METADATA_COUNTDOWN);
         if (metadataValues.isEmpty())
             return;
 

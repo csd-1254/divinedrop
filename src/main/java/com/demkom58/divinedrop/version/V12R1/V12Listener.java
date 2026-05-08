@@ -6,6 +6,7 @@ import org.bukkit.entity.Item;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,6 +38,12 @@ public class V12Listener implements Listener {
     @EventHandler
     public void onDropPickup(EntityPickupItemEvent event) {
         if (!itemHandler.getRegistry().itemPickup(event.getEntity(), event.getItem()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryPickup(InventoryPickupItemEvent event) {
+        if (!itemHandler.getRegistry().inventoryPickup(event.getInventory(), event.getItem()))
             event.setCancelled(true);
     }
 
