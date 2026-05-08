@@ -31,6 +31,7 @@ public class ItemHandler {
     private final ItemRegistry registry;
 
     private final DivineTimer itemTickTimer;
+    private final DivineTimer stackTickTimer;
 
     private List<Item> toRemove = new ArrayList<>();
     private List<Item> shadow = new ArrayList<>();
@@ -60,16 +61,26 @@ public class ItemHandler {
             });
             items.clear();
         });
+
+        this.stackTickTimer = new DivineTimer(plugin, () -> {
+            if (data.getStackRadius() <= 0)
+                return;
+            Bukkit.getScheduler().runTask(plugin, registry::stackNearbyItems);
+        });
     }
 
     public void reload() {
         itemTickTimer.stop();
+        stackTickTimer.stop();
 
         if (!data.isCleanerEnabled()) {
             registry.getTimedItems().forEach(item -> item.removeMetadata(StaticData.METADATA_COUNTDOWN, plugin));
             registry.getDeathDropItems().clear();
             registry.getTimedItems().clear();
         } else itemTickTimer.start();
+
+        if (data.getStackRadius() > 0)
+            stackTickTimer.start();
 
         Bukkit.getServer().getWorlds().forEach(world -> world.getEntities().stream()
                 .filter(entity -> entity instanceof Item)
@@ -78,6 +89,7 @@ public class ItemHandler {
 
     public void disable() {
         this.itemTickTimer.stop();
+        this.stackTickTimer.stop();
 
         final Set<Item> timedItems = registry.getTimedItems();
         timedItems.forEach(item -> {

@@ -7,7 +7,7 @@
 #      \|_______|\___/ /             \|_______|\|_______|\|__|     \|__|\|__| \|__|\|_______|\|__|     \|__|\_________\|_______|
 #               \|___|/                                                                                    \|_________|
 # Don't change this
-config-version: 3
+config-version: 4
 
 # Enable update notifications in chat for admins and console.
 check-updates: true
@@ -22,6 +22,12 @@ pickup-items-on-sneak: false
 
 # Ignore no-pickup items, for compatibility with other plugins.
 ignore-no-pickup-items: true
+
+# Maximum amount for a single dropped item entity stack in the world.
+max-stack: 512
+
+# Radius in blocks for periodic auto-stacking of similar dropped items.
+stack-radius: 6
 
 # Name of resource. Example: en_CA, uk_UA, de_DE, mt_MT etc.
 # More: https://www.spigotmc.org/resources/divinedrop.51715/

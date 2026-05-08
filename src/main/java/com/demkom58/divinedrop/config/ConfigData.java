@@ -28,6 +28,8 @@ public final class ConfigData {
     private boolean pickupOnShift;
     private boolean ignoreNoPickup;
     private String lang;
+    private int maxStack;
+    private int stackRadius;
 
     // Message settings
     private String prefixMessage;
@@ -77,6 +79,8 @@ public final class ConfigData {
         pickupOnShift = conf.getBoolean("pickup-items-on-sneak", false);
         ignoreNoPickup = conf.getBoolean("ignore-no-pickup-items", true);
         lang = conf.getString("lang", "en_CA");
+        maxStack = Math.max(1, conf.getInt("max-stack", 512));
+        stackRadius = Math.max(0, conf.getInt("stack-radius", 6));
 
         final ConfigurationSection msg = getConfigurationSection(conf, "messages");
         prefixMessage = colorize(msg.getString("prefix", "&5&lDivineDrop &7> &f"));
