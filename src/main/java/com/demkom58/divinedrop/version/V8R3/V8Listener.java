@@ -9,6 +9,7 @@ import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.jetbrains.annotations.NotNull;
@@ -40,6 +41,12 @@ public final class V8Listener implements Listener {
     @EventHandler
     public void onDropPickup(PlayerPickupItemEvent event) {
         if (!itemHandler.getRegistry().itemPickup(event.getPlayer(), event.getItem()))
+            event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onInventoryPickup(InventoryPickupItemEvent event) {
+        if (!itemHandler.getRegistry().inventoryPickup(event.getInventory(), event.getItem()))
             event.setCancelled(true);
     }
 

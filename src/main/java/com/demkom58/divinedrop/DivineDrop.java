@@ -33,7 +33,7 @@ public final class DivineDrop extends JavaPlugin {
             Objects.requireNonNull(VersionManager.detectMinecraftVersion()), "spigot", StaticData.RESOURCE_ID);
 
     private final VersionManager versionManager = new VersionManager(this);
-    private final Config configuration = new Config("config", this, versionManager, 3);
+    private final Config configuration = new Config("config", this, versionManager, 4);
     private final LangManager langManager = new LangManager(this, configuration.getConfigData());
     private final ItemHandler itemHandler = new ItemHandler(this, versionManager, configuration.getConfigData());
 
